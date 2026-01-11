@@ -87,24 +87,14 @@ All RL algorithms are implemented directly on top of the custom autograd engine.
 | **Categorical DQN (C51)** | [Bellemare et al., 2017](https://arxiv.org/abs/1707.06887) — Distributional reinforcement learning |
 | **Rainbow DQN** | [Hessel et al., 2018](https://arxiv.org/abs/1710.02298) — Combining multiple DQN improvements |
 
-### Policy Gradient Methods
 
-| Algorithm | Description |
-|-----------|-------------|
-| **REINFORCE** | Vanilla policy gradient with baseline |
-| **A2C** | Advantage Actor-Critic |
-| **PPO** | Proximal Policy Optimization |
-| **SARSA** | On-policy TD control |
-
----
 
 ## 📊 Design Choices
 
-- Target networks are kept strictly deterministic (no noisy layers)
 - PER uses importance sampling weights
 - Huber loss supports unreduced mode for priority updates
 - Graph pruning is explicitly handled to control memory growth
-- Exploration is isolated from value estimation (NoisyNet vs ε-greedy)
+
 
 ---
 
@@ -169,6 +159,13 @@ This repository re-implements the ideas without relying on PyTorch, focusing ins
 
 ---
 
-## 📄 License
+## � Contributors
+
+- **Umutcan Uyan** ([@Uyann1](https://github.com/Uyann1))
+- **Contributor** ([@DaTTeBaY0o00](https://github.com/DaTTeBaY0o00))
+
+---
+
+## �📄 License
 
 MIT License
