@@ -108,8 +108,6 @@ cd mnga
 # Install in development mode
 pip install -e .
 
-# Run an example
-python examples/train_cartpole_dqn.py
 ```
 
 ---
@@ -162,7 +160,7 @@ This repository re-implements the ideas without relying on PyTorch, focusing ins
 ## � Contributors
 
 - **Umutcan Uyan** ([@Uyann1](https://github.com/Uyann1))
-- **Contributor** ([@DaTTeBaY0o00](https://github.com/DaTTeBaY0o00))
+- **Bahri Uyan** ([@DaTTeBaY0o00](https://github.com/DaTTeBaY0o00))
 
 ---
 
