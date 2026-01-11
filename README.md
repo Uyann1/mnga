@@ -164,6 +164,5 @@ This repository re-implements the ideas without relying on PyTorch, focusing ins
 
 ---
 
-## �📄 License
-
-MIT License
+## License
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
