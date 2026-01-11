@@ -1,51 +1,37 @@
 import numpy as np
 from .module import Module
-from ..autograd import maximum
+from ..autograd import huber_loss, log_softmax
 
 class MSELoss(Module):
     def forward(self, pred, target):
         return ((pred - target) ** 2).mean()
 
 class HuberLoss(Module):
-    def __init__(self, delta=1.0):
+    def __init__(self, delta=1.0, reduction='mean'):
         super().__init__()
         self.delta = delta
+        self.reduction = reduction
+    
+    def forward(self, pred, target, reduction=None):
+        # Use the passed reduction if provided, else use the default set in __init__
+        red = reduction if reduction is not None else self.reduction
+        return huber_loss(pred, target, delta=self.delta, reduction=red)
+
+class CrossEntropyLoss(Module):
+    def __init__(self):
+        super().__init__()
 
     def forward(self, pred, target):
-        diff = pred - target
-        # We need absolute value, but we don't have abs in autograd yet.
-        # Let's implement abs using maximum(x, -x)
-        abs_diff = maximum(diff, -diff)
+        log_probs = log_softmax(pred)
         
-        quadratic = maximum(abs_diff, self.delta) # This logic is wrong for Huber.
-        # Huber: 0.5 * x^2 if |x| < delta, else delta * (|x| - 0.5 * delta)
-        # We need a conditional operation or masking.
-        # Autograd doesn't support masking easily yet.
-        # Let's stick to a simpler implementation or add masking to autograd.
-        # Or we can just implement HuberLoss as a Function.
+        batch_size = pred.shape[0]
         
-        # For now, let's implement a simplified version or just use MSE if Huber is too hard without masking.
-        # But wait, I can implement HuberLossFunction.
-        return HuberLossFunction.apply(pred, target, delta=self.delta)
+        if hasattr(target, 'data'):
+            target = target.data
+        if isinstance(target, list):
+            target = np.array(target)
 
-from ..autograd import Function, Tensor
-
-class HuberLossFunction(Function):
-    @staticmethod
-    def forward(ctx, pred, target, delta=1.0):
-        diff = pred - target
-        abs_diff = np.abs(diff)
-        mask = abs_diff <= delta
+        idx = (np.arange(batch_size), target)
+        selected_log_probs = log_probs[idx]
         
-        loss = np.where(mask, 0.5 * diff ** 2, delta * (abs_diff - 0.5 * delta))
-        
-        ctx.save_for_backward(diff, mask, delta)
-        return np.mean(loss)
-
-    @staticmethod
-    def backward(ctx, grad_output):
-        diff, mask, delta = ctx.saved_tensors
-        
-        grad = np.where(mask, diff, delta * np.sign(diff))
-        
-        return grad * grad_output / diff.size, -grad * grad_output / diff.size, None
+        return -selected_log_probs.mean()

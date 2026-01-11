@@ -1,14 +1,14 @@
 import numpy as np
 from .module import Module
-from ..autograd import maximum, exp, tanh
+from ..autograd import sigmoid, relu, tanh
 
 class ReLU(Module):
     def forward(self, x):
-        return maximum(x, 0)
+        return relu(x)
 
 class Sigmoid(Module):
     def forward(self, x):
-        return 1 / (1 + exp(-x))
+        return sigmoid(x)
 
 class Tanh(Module):
     def forward(self, x):
