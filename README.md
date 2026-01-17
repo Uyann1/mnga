@@ -102,7 +102,7 @@ All RL algorithms are implemented directly on top of the custom autograd engine.
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/mnga.git
+git clone https://github.com/Uyann1/mnga.git
 cd mnga
 
 # Install in development mode
