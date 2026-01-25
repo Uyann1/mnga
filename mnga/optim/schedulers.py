@@ -22,7 +22,6 @@ class _LRScheduler:
         # Update optimizer LR
         # MNGA Optimizer currently has a single self.lr attribute
         # We will assume for now we are updating that. 
-        # Future/More robust: support param_groups like PyTorch
         self.optimizer.lr = values[0] 
         self._last_lr = values
 
