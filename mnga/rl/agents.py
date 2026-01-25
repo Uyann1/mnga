@@ -384,7 +384,6 @@ class DDQNPERAgent:
         action_dim = env.action_space.n
 
         self.env = env
-        # your existing PER buffer (unchanged)
         self.memory = PrioritizedReplayBuffer(
             obs_dim, memory_size, batch_size, alpha=alpha, gamma=gamma
         )
@@ -766,7 +765,6 @@ class CategoricalAgent:
         """Update the model using Categorical Loss."""
         samples = self.memory.sample_batch()
 
-        # In your framework, loss calculation usually happens in _compute_dqn_loss
         loss = self._compute_dqn_loss(samples)
 
         self.optimizer.zero_grad()
@@ -930,7 +928,6 @@ class RainbowAgent:
         self.dqn_target = RainbowNetwork(obs_dim, action_dim, self.atom_size, self.support)
         self.dqn_target.load_state_dict(self.dqn.state_dict())
         self.dqn_target.eval()
-        # Note: In custom frameworks, ensuring eval mode depends on your Module implementation
         
         # Optimizer
         self.optimizer = Adam(self.dqn.parameters())
@@ -1111,10 +1108,7 @@ class RainbowAgent:
             # Projected distribution (m in the paper)
             proj_dist = Tensor.zeros((self.batch_size, self.atom_size), requires_grad=False)
             
-            # Simple Python loop implementation (easier to debug, slightly slower)
-            # Or use the vectorized index_add if your Tensor lib supports it
             
-            # Vectorized Logic (assuming PyTorch-like index_add_):
             # We add mass to the lower index (l) based on distance from upper (u)
             final_l_indices = (l + offset).view(-1)
             final_u_indices = (u + offset).view(-1)
@@ -1127,7 +1121,6 @@ class RainbowAgent:
         dist = self.dqn.dist(state)
         
         # Extract the probability of the action actually taken
-        # Your GetItem function handles this via dist[...]
         action_indices = action.data.flatten().astype(int)
         current_dist = dist[np.arange(self.batch_size), action_indices]
         
