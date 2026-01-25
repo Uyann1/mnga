@@ -8,7 +8,6 @@ class SegmentTree:
         self.capacity = capacity
         self.operation = operation
         self.init_value = init_value
-        # Use Python List for faster single-element access
         self.tree = [init_value] * (2 * capacity)
 
     def operate(self, start: int = 0, end: int = None) -> float:
