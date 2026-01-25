@@ -112,31 +112,6 @@ pip install -e .
 
 ---
 
-## 📁 Project Structure
-
-```
-mnga/
-├── mnga/
-│   ├── autograd.py      # Core autograd engine
-│   ├── nn/              # Neural network modules
-│   │   ├── __init__.py
-│   │   ├── module.py    # Base Module class
-│   │   ├── linear.py    # Linear layer
-│   │   ├── activations.py
-│   │   └── losses.py
-│   ├── optim/           # Optimizers
-│   │   └── optimizers.py  # SGD, Adam, RMSprop
-│   └── rl/              # RL components
-│       ├── agents.py    # All RL agents
-│       ├── buffers.py   # Replay buffers
-│       └── networks.py  # Agent networks
-├── examples/            # Training scripts
-├── tests/               # Unit tests
-└── README.md
-```
-
----
-
 ## 📚 References
 
 This implementation was informed by the following papers:
